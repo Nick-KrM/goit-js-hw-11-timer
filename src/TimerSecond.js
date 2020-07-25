@@ -3,7 +3,8 @@ import { getDays, getHours, getMins, getSecs } from './timerUntils';
 const desiredDate = new Date('Jul 30, 2020');
 
 const templateSecond = value => `
-    <div class="field">
+<div class="date-field">    
+    <div class="field ">
         <span class="days" data-value="days">${value}</span>
         <span class="label">Days</span>
     </div>
@@ -22,14 +23,15 @@ const templateSecond = value => `
         <span class="secs" data-value="secs">${value}</span>
         <span class="label">Seconds</span>
     </div>
+</div>
     <div class="buttons">
-        <button class="button stop" disabled>Stop</button>
-        <button class="button start">Start</button>
+        <button class="button stop" disabled><span>Stop</span></button>
+        <button class="button start"><span>Start</span></button>
     </div>
 `;
 
 export default function TimerSecond({ selector }) {
-    this.value = 0;
+    this.value = '00';
     this.id = undefined;
 
     document
@@ -37,7 +39,7 @@ export default function TimerSecond({ selector }) {
         .insertAdjacentHTML('beforeend', templateSecond(this.value));
 
     const refs = {
-        value: document.querySelector(`${selector} .value`),
+        dateField: document.querySelector(`${selector} .date-field`),
         days: document.querySelector(`${selector} .days`),
         hours: document.querySelector(`${selector} .hours`),
         mins: document.querySelector(`${selector} .mins`),
@@ -76,6 +78,7 @@ export default function TimerSecond({ selector }) {
             refs.secs.textContent = `${seconds}`;
 
         }, 1000);
+        refs.dateField.classList.add('color-animation');
         refs.start.setAttribute('disabled', true);
         refs.stop.removeAttribute('disabled');
     };
@@ -83,6 +86,13 @@ export default function TimerSecond({ selector }) {
     this.stop = () => {
         clearInterval(this.id);
         this.id = 0;
+
+        refs.days.textContent = this.value;
+        refs.hours.textContent = this.value;
+        refs.mins.textContent = this.value;
+        refs.secs.textContent = this.value;
+
+        refs.dateField.classList.remove('color-animation');
         refs.stop.setAttribute('disabled', true);
         refs.start.removeAttribute('disabled');
     };

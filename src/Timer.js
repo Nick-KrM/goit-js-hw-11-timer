@@ -2,16 +2,16 @@ import { getDays, getHours, getMins, getSecs } from './timerUntils';
 
 const template = value => `
 <div class="timer">
-  <span class="value">${value}</span>
+  <span class="value time">${value}</span>
   <div class="buttons">
-    <button class="button stop" disabled>Stop</button>
-    <button class="button start">Start</button>
+    <button class="button stop" disabled><span>Pause</span></button>
+    <button class="button start"><span>Start</span></button>
   </div>
 </div>
 `;
 
 export default function Timer({ selector }) {
-    this.value = 0;
+    this.value = '00:00:00:00';
     this.id = undefined;
 
     document
