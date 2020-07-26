@@ -49,13 +49,13 @@ export default function TimerSecond({ selector }) {
     };
     // console.dir(refs.days);
     this.start = () => {
+
         if (this.id) {
             return;
         }
 
-        this.id = setInterval(() => {
+        const countTime = () => {
             const start = desiredDate;
-
             const end = Date.now();
             const diff = start - end;
 
@@ -76,8 +76,11 @@ export default function TimerSecond({ selector }) {
             refs.hours.textContent = `${hours}`;
             refs.mins.textContent = `${minutes}`;
             refs.secs.textContent = `${seconds}`;
+        };
+        countTime();
 
-        }, 1000);
+        this.id = setInterval(countTime, 1000);
+
         refs.dateField.classList.add('color-animation');
         refs.start.setAttribute('disabled', true);
         refs.stop.removeAttribute('disabled');

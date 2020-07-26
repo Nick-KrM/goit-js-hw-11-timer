@@ -28,8 +28,7 @@ export default function Timer({ selector }) {
         if (this.id) {
             return;
         }
-
-        this.id = setInterval(() => {
+        const countTime = () => {
             const start = new Date('Jul 29, 2020');
 
             const end = Date.now();
@@ -49,7 +48,11 @@ export default function Timer({ selector }) {
                 .padStart(2, 0);
 
             refs.value.textContent = `${days}:${hours}:${minutes}:${seconds}`;
-        }, 1000);
+        };
+        countTime();
+
+        this.id = setInterval(countTime, 1000);
+
         refs.start.setAttribute('disabled', true);
         refs.stop.removeAttribute('disabled');
     };
